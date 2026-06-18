@@ -14,7 +14,28 @@ export interface Restaurant {
   freeNftPromo?: boolean;
 }
 
+export interface MenuItem {
+  _id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  priceUsd: number;
+  promoPriceUsd?: number | null;
+  categories: string[];
+  isAvailable: boolean;
+}
+
 export interface RestaurantsResponse {
   status: string;
   data: Restaurant[];
+  meta?: {
+    nextCursor: string | null;
+    hasMore: boolean;
+  };
+}
+
+export interface RestaurantFilters {
+  category?: string;
+  sector?: string;
+  search?: string;
 }

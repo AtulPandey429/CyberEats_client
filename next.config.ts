@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
     root: path.resolve(__dirname),
   },
   outputFileTracingRoot: path.resolve(__dirname),
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'placehold.co' },
+      { protocol: 'https', hostname: 'example.com' },
+    ],
+  },
 };
 
 export default nextConfig;

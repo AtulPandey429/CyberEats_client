@@ -43,7 +43,21 @@ export async function getHealth(): Promise<HealthResponse> {
   return data;
 }
 
-export async function getRestaurants() {
-  const { data } = await api.get('/restaurants');
+export async function getRestaurants(params?: {
+  category?: string;
+  sector?: string;
+  search?: string;
+}) {
+  const { data } = await api.get('/restaurants', { params });
+  return data;
+}
+
+export async function fetchTopRestaurants() {
+  const { data } = await api.get('/restaurants/top');
+  return data;
+}
+
+export async function fetchCategories() {
+  const { data } = await api.get('/categories');
   return data;
 }

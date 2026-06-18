@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Star } from 'lucide-react';
+import { Clock, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CategoryPill } from '@/components/CategoryPill';
@@ -24,6 +24,10 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
         </CardHeader>
         <CardContent className="space-y-3">
           <p className="line-clamp-2 text-sm text-slate-400">{restaurant.description}</p>
+          <div className="flex items-center gap-2 text-xs text-slate-500">
+            <Clock className="h-3.5 w-3.5" />
+            {restaurant.prepTimeRange.min}-{restaurant.prepTimeRange.max} min
+          </div>
           <div className="flex flex-wrap gap-2">
             {restaurant.categories.slice(0, 2).map((cat) => (
               <CategoryPill key={cat} label={cat} />
