@@ -1,6 +1,7 @@
 'use client';
 
 import { AuthForm, type AuthFormValues } from '@/features/auth/components/AuthForm';
+import { SocialLoginButtons } from '@/features/auth/components/SocialLoginButtons';
 import { useSignup } from '@/features/auth/services/useAuth';
 
 export default function SignupPage() {
@@ -16,7 +17,8 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex min-h-[70vh] items-center justify-center px-4 py-10 pb-24">
+    <div className="flex min-h-[70vh] flex-col items-center justify-center gap-6 px-4 py-10 pb-24">
+      <SocialLoginButtons />
       <AuthForm
         mode="signup"
         onSubmit={onSubmit}
