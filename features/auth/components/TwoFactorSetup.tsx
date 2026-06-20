@@ -25,8 +25,8 @@ export function TwoFactorSetup() {
   };
 
   return (
-    <div className="space-y-3 rounded-xl border border-cyan-400/20 bg-slate-900/60 p-4">
-      <h3 className="text-sm font-semibold uppercase tracking-wide text-cyan-300">
+    <div className="space-y-3 rounded-xl border border-theme bg-input/60 p-4">
+      <h3 className="text-sm font-semibold uppercase tracking-wide text-accent">
         Two-Factor Auth
       </h3>
       <Button type="button" onClick={startSetup}>
@@ -35,7 +35,7 @@ export function TwoFactorSetup() {
       {qrCode && (
         <Image src={qrCode} alt="2FA QR code" width={180} height={180} className="rounded" />
       )}
-      {secret && <p className="text-xs text-slate-500">Secret: {secret}</p>}
+      {secret && <p className="text-xs text-muted">Secret: {secret}</p>}
       {qrCode && (
         <>
           <Input
@@ -48,7 +48,7 @@ export function TwoFactorSetup() {
           </Button>
         </>
       )}
-      {status && <p className="text-sm text-slate-400">{status}</p>}
+      {status && <p className="text-sm text-muted">{status}</p>}
     </div>
   );
 }

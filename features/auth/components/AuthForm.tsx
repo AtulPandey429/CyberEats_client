@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 const authSchema = z.object({
   email: z.string().email('Valid email required'),
@@ -26,6 +26,28 @@ interface AuthFormProps {
   show2FA?: boolean;
 }
 
+function Field({
+  label,
+  htmlFor,
+  error,
+  children,
+}: {
+  label: string;
+  htmlFor: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-2">
+      <label className="section-label text-muted" htmlFor={htmlFor}>
+        {label}
+      </label>
+      {children}
+      {error && <p className="text-xs text-red-400">{error}</p>}
+    </div>
+  );
+}
+
 export function AuthForm({ mode, onSubmit, isLoading, error, show2FA }: AuthFormProps) {
   const {
     register,
@@ -36,80 +58,65 @@ export function AuthForm({ mode, onSubmit, isLoading, error, show2FA }: AuthForm
   });
 
   return (
-    <Card className="mx-auto w-full max-w-md">
-      <CardHeader>
-        <CardTitle className="uppercase tracking-[0.2em]">
-          {show2FA ? 'Two-factor auth' : mode === 'login' ? 'Login' : 'Sign Up'}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {show2FA ? (
-            <div>
-              <Input placeholder="6-digit code" inputMode="numeric" {...register('totpCode')} />
-              {errors.totpCode && (
-                <p className="mt-1 text-xs text-red-400">{errors.totpCode.message}</p>
-              )}
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      {show2FA ? (
+        <Field label="Verification code" htmlFor="totpCode" error={errors.totpCode?.message}>
+          <Input id="totpCode" placeholder="6-digit code" inputMode="numeric" {...register('totpCode')} />
+        </Field>
+      ) : (
+        <>
+          {mode === 'signup' && (
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Given name" htmlFor="firstName" error={errors.firstName?.message}>
+                <Input id="firstName" placeholder="First name" {...register('firstName')} />
+              </Field>
+              <Field label="Surname" htmlFor="lastName" error={errors.lastName?.message}>
+                <Input id="lastName" placeholder="Last name" {...register('lastName')} />
+              </Field>
             </div>
-          ) : (
-            <>
-              {mode === 'signup' && (
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <Input placeholder="First name" {...register('firstName')} />
-                    {errors.firstName && (
-                      <p className="mt-1 text-xs text-red-400">{errors.firstName.message}</p>
-                    )}
-                  </div>
-                  <div>
-                    <Input placeholder="Last name" {...register('lastName')} />
-                    {errors.lastName && (
-                      <p className="mt-1 text-xs text-red-400">{errors.lastName.message}</p>
-                    )}
-                  </div>
-                </div>
-              )}
-              <div>
-                <Input type="email" placeholder="Email" {...register('email')} />
-                {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>}
-              </div>
-              <div>
-                <Input type="password" placeholder="Password" {...register('password')} />
-                {errors.password && (
-                  <p className="mt-1 text-xs text-red-400">{errors.password.message}</p>
-                )}
-              </div>
-            </>
           )}
-          {error && <p className="text-sm text-red-400">{error}</p>}
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading
-              ? 'Please wait...'
-              : show2FA
-                ? 'Verify code'
-                : mode === 'login'
-                  ? 'Login'
-                  : 'Create account'}
-          </Button>
-          <p className="text-center text-sm text-slate-400">
-            {mode === 'login' ? (
-              <>
-                No account?{' '}
-                <Link href="/signup" className="text-cyan-300 hover:underline">
-                  Sign up
-                </Link>
-              </>
-            ) : (
-              <>
-                Have an account?{' '}
-                <Link href="/login" className="text-cyan-300 hover:underline">
-                  Login
-                </Link>
-              </>
-            )}
-          </p>
-        </form>
-      </CardContent>
-    </Card>
+          <Field label="Identity token" htmlFor="email" error={errors.email?.message}>
+            <Input id="email" type="email" placeholder="operator@cybereats.io" {...register('email')} />
+          </Field>
+          <Field label="Access key" htmlFor="password" error={errors.password?.message}>
+            <Input id="password" type="password" placeholder="••••••••" {...register('password')} />
+          </Field>
+        </>
+      )}
+      {error && (
+        <p className="rounded-lg border border-red-400/20 bg-red-400/5 px-3 py-2 text-sm text-red-300">
+          {error}
+        </p>
+      )}
+      <Button
+        type="submit"
+        size="lg"
+        className={cn('w-full transition-all duration-300 hover:cyber-glow', isLoading && 'opacity-80')}
+        disabled={isLoading}
+      >
+        {isLoading
+          ? 'Please wait...'
+          : show2FA
+            ? 'Verify code'
+            : mode === 'login'
+              ? 'Initialize Session'
+              : 'Create operator'}
+      </Button>
+      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm">
+        {mode === 'login' ? (
+          <>
+            <Link href="/signup" className="text-accent transition-colors hover:text-accent hover:underline">
+              Register Operator
+            </Link>
+            <span className="text-muted">·</span>
+            <span className="text-muted">Forgot Key?</span>
+          </>
+        ) : (
+          <Link href="/login" className="text-accent transition-colors hover:text-accent hover:underline">
+            Back to Secure Terminal
+          </Link>
+        )}
+      </div>
+    </form>
   );
 }

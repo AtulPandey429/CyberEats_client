@@ -12,19 +12,19 @@ interface RestaurantCardProps {
 export function RestaurantCard({ restaurant }: RestaurantCardProps) {
   return (
     <Link href={`/restaurants/${restaurant.slug}`}>
-      <Card className="transition hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(0,212,255,0.15)]">
+      <Card className="overflow-hidden transition hover:border-theme-strong hover:shadow-[var(--panel-shadow)]">
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between gap-2">
             <CardTitle className="text-base uppercase tracking-wide">{restaurant.name}</CardTitle>
-            <div className="flex items-center gap-1 text-sm text-cyan-300">
-              <Star className="h-4 w-4 fill-cyan-300" />
+            <div className="flex items-center gap-1 text-sm text-accent">
+              <Star className="h-4 w-4 fill-[var(--accent-foreground)] text-accent" />
               {restaurant.rating.toFixed(1)}
             </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-3">
-          <p className="line-clamp-2 text-sm text-slate-400">{restaurant.description}</p>
-          <div className="flex items-center gap-2 text-xs text-slate-500">
+          <p className="line-clamp-2 text-sm text-muted">{restaurant.description}</p>
+          <div className="flex items-center gap-2 text-xs text-muted">
             <Clock className="h-3.5 w-3.5" />
             {restaurant.prepTimeRange.min}-{restaurant.prepTimeRange.max} min
           </div>

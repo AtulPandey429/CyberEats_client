@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { api } from '@/services/api';
 import { clearAuthTokens, isAuthenticated, setAuthTokens } from '@/lib/auth';
 import { useAppDispatch } from '@/store/hooks';
@@ -44,6 +44,7 @@ export function useMe() {
 
 export function useLogin() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -58,8 +59,10 @@ export function useLogin() {
       setAuthTokens(data.accessToken, data.refreshToken);
       dispatch(setUser(data.user));
       queryClient.invalidateQueries({ queryKey: ['me'] });
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
       toast('Logged in successfully');
-      router.push('/');
+      const next = searchParams.get('next');
+      router.replace(next && next.startsWith('/') ? next : '/');
     },
     onError: () => {
       toast('Invalid email or password', 'error');
@@ -69,6 +72,7 @@ export function useLogin() {
 
 export function useTwoFactorLogin() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -82,8 +86,10 @@ export function useTwoFactorLogin() {
       setAuthTokens(data.accessToken, data.refreshToken);
       dispatch(setUser(data.user));
       queryClient.invalidateQueries({ queryKey: ['me'] });
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
       toast('Logged in successfully');
-      router.push('/');
+      const next = searchParams.get('next');
+      router.replace(next && next.startsWith('/') ? next : '/');
     },
     onError: () => {
       toast('Invalid 2FA code', 'error');
@@ -93,6 +99,7 @@ export function useTwoFactorLogin() {
 
 export function useSignup() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -111,8 +118,10 @@ export function useSignup() {
       setAuthTokens(data.accessToken, data.refreshToken);
       dispatch(setUser(data.user));
       queryClient.invalidateQueries({ queryKey: ['me'] });
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
       toast('Account created successfully');
-      router.push('/');
+      const next = searchParams.get('next');
+      router.replace(next && next.startsWith('/') ? next : '/');
     },
     onError: () => {
       toast('Signup failed — email may already exist', 'error');

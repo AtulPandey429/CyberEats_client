@@ -13,7 +13,7 @@ export const ToastViewport = React.forwardRef<
   <ToastPrimitive.Viewport
     ref={ref}
     className={cn(
-      'fixed bottom-0 right-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]',
+      'fixed top-[calc(var(--app-header-height,4rem)+1rem)] right-0 z-[100] flex max-h-screen w-full flex-col p-4 sm:right-0 md:max-w-[420px]',
       className,
     )}
     {...props}
@@ -28,7 +28,7 @@ export const Toast = React.forwardRef<
   <ToastPrimitive.Root
     ref={ref}
     className={cn(
-      'group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border border-cyan-400/20 bg-slate-900 p-4 text-slate-100 shadow-lg',
+      'group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border border-theme bg-surface p-4 text-foreground shadow-lg',
       className,
     )}
     {...props}
@@ -48,7 +48,7 @@ export const ToastClose = ToastPrimitive.Close;
 
 export function ToastCloseButton() {
   return (
-    <ToastPrimitive.Close className="rounded-md p-1 text-slate-400 hover:text-cyan-300">
+    <ToastPrimitive.Close className="rounded-md p-1 text-muted hover:text-accent">
       <X className="h-4 w-4" />
     </ToastPrimitive.Close>
   );

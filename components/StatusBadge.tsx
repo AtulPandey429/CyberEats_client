@@ -1,11 +1,11 @@
 import { cn } from '@/lib/utils';
 
 const toneMap = {
-  success: 'border-emerald-400/30 bg-emerald-400/10 text-emerald-300',
-  warning: 'border-amber-400/30 bg-amber-400/10 text-amber-300',
-  error: 'border-red-400/30 bg-red-400/10 text-red-300',
-  info: 'border-cyan-400/30 bg-cyan-400/10 text-cyan-300',
-  neutral: 'border-slate-600 bg-slate-800 text-slate-300',
+  success: 'border-[var(--success-border)] bg-[var(--success-bg)] text-[var(--success-fg)]',
+  warning: 'border-[var(--warning-border)] bg-[var(--warning-bg)] text-[var(--warning-fg)]',
+  error: 'border-[var(--error-border)] bg-[var(--error-bg)] text-[var(--error-fg)]',
+  info: 'border-[var(--info-border)] bg-[var(--info-bg)] text-[var(--info-fg)]',
+  neutral: 'border-theme bg-surface-elevated text-muted',
 } as const;
 
 interface StatusBadgeProps {

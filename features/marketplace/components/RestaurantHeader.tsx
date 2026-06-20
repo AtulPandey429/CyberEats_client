@@ -14,26 +14,27 @@ interface RestaurantHeaderProps {
 
 export function RestaurantHeader({ restaurant, isSaved, onToggleSave }: RestaurantHeaderProps) {
   return (
-    <div className="overflow-hidden rounded-xl border border-cyan-400/20 bg-slate-900/60">
-      <div className="relative h-40 w-full bg-slate-800">
+    <div className="terminal-panel overflow-hidden rounded-xl">
+      <div className="relative h-40 w-full bg-surface-elevated">
         <Image
           src={restaurant.bannerUrl}
           alt={`${restaurant.name} banner`}
           fill
+          sizes="(max-width: 768px) 100vw, 896px"
           className="object-cover opacity-80"
         />
       </div>
       <div className="space-y-3 p-4">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold uppercase tracking-wide text-white">
+            <h1 className="text-2xl font-bold uppercase tracking-wide text-foreground">
               {restaurant.name}
             </h1>
-            <p className="text-sm text-slate-400">{restaurant.sector}</p>
+            <p className="text-sm text-muted">{restaurant.sector}</p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 text-cyan-300">
-              <Star className="h-4 w-4 fill-cyan-300" />
+            <div className="flex items-center gap-1 text-accent">
+              <Star className="h-4 w-4 fill-accent text-accent" />
               {restaurant.rating.toFixed(1)}
             </div>
             {onToggleSave && (
@@ -48,7 +49,7 @@ export function RestaurantHeader({ restaurant, isSaved, onToggleSave }: Restaura
             )}
           </div>
         </div>
-        <p className="text-sm text-slate-300">{restaurant.description}</p>
+        <p className="text-sm text-foreground/80">{restaurant.description}</p>
         <div className="flex flex-wrap gap-2">
           {restaurant.categories.map((cat) => (
             <CategoryPill key={cat} label={cat} />

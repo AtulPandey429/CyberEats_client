@@ -60,7 +60,7 @@ function OAuthCallbackContent() {
   return (
     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-4">
       <LoadingSpinner />
-      <p className="text-sm text-slate-400">Completing sign in...</p>
+      <p className="text-sm text-muted">Completing sign in...</p>
     </div>
   );
 }
