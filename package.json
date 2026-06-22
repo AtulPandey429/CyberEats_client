@@ -12,7 +12,10 @@
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx,css,json}\"",
     "test": "echo \"No unit tests yet — use test:e2e\"",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "deploy:check": "npm run lint && npm run build && npm run docker:smoke",
+    "docker:smoke": "node scripts/docker-smoke.mjs",
+    "docker:build": "docker build -t cybereats-web ."
   },
   "dependencies": {
     "@gemwallet/api": "^3.8.0",

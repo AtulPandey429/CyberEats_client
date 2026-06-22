@@ -7,6 +7,7 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   // Pin workspace root — avoids Turbopack picking up parent lockfile (C:\Users\LENOVO\package-lock.json)
   turbopack: {
     root: path.resolve(__dirname),
